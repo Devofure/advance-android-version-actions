@@ -1,22 +1,28 @@
-# android-version-action v1.1
+# android-version-action v1.3
 Override your android version number and version code through github actions
 
-## Features
-* Override version number to bump version through github actions
-* Override version name
+## Usage
 
-## Parameters
-`gradlePath`
-**Required**, File path to the **Path to the build.gradle file** so that it knows where to find the file that contains the versionCode and versionName attributes.
+```yaml
+- uses: DoubleSymmetry/android-version-actions@v1.3
+  with:
+    gradlePath: app/build.gradle # or app/build.gradle.kts
 
-`versionCode`
-**Optional**, Version Code to override
+    # versionCode
+    # ex. 10
+    # If versionCode is not set, auto-increment versionCode.
+    versionCode: ${{github.run_number}}
 
-`versionName`
-**Optional**, Version Name to override
-
-## Example
+    # versionName
+    # ex. 3.2.0
+    # If versionName is not set, the version does not be changed.
+    versionName: ''
 ```
+
+## Examples
+
+### auto increment build number
+```yaml
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +34,26 @@ jobs:
         with:
           java-version: 1.8
       - name: Bump version
-        uses: chkfung/android-version-actions@v1.1
+        uses: DoubleSymmetry/android-version-actions@v1.3
+        with:
+          gradlePath: app/build.gradle # or app/build.gradle.kts 
+          versionName: 1.0.0
+```
+
+### specify build number using GITHUB_RUN_NUMBER
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Bump version
+        uses: DoubleSymmetry/android-version-actions@v1.3
         with:
           gradlePath: app/build.gradle # or app/build.gradle.kts 
           versionCode: ${{github.run_number}}
