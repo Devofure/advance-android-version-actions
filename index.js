@@ -19,12 +19,15 @@ try {
         newGradle = data;
         if (versionCode.length > 0)
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${versionCode}`);
+        else
+            const lastVersionCodeStr = newGradle.match(versionCodeRegexPattern)[2];
+            const newVersionCode = parseInt(lastVersionCodeStr) + 1;
+            newGradle = newGradle.replace(versionCodeRegexPattern, `$1${newVersionCode}`);
         if (versionName.length > 0)
             newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${versionName}\"`);
         fs.writeFile(gradlePath, newGradle, function (err) {
             if (err) throw err;
-            if (versionCode.length > 0)
-                console.log(`Successfully override version code ${versionCode}`)
+            console.log(`Successfully override version code ${versionCode}`)
             if (versionName.length > 0)
                 console.log(`Successfully override version code ${versionName}`)
             core.setOutput("result", `Done`);
