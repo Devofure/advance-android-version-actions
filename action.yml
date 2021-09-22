@@ -1,5 +1,5 @@
-name: "Increment the version code of your project"
-description: "This action will increment the version code directly in build.gradle . "
+name: "Increment the version code/name of your Android project"
+description: "This action will increment the version code/name directly in build.gradle . "
 inputs:
   gradlePath:
     description: "Gradle path to override version"
