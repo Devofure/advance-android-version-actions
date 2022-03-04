@@ -19,10 +19,11 @@ try {
         newGradle = data;
         if (versionCode.length > 0)
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${versionCode}`);
-        else
+        else {
             const lastVersionCodeStr = newGradle.match(versionCodeRegexPattern)[2];
             const newVersionCode = parseInt(lastVersionCodeStr) + 1;
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${newVersionCode}`);
+        }
         if (versionName.length > 0)
             newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${versionName}\"`);
         fs.writeFile(gradlePath, newGradle, function (err) {
