@@ -34,7 +34,7 @@ try {
         }
 
         const currentVersionCode = newGradle.match(versionCodeRegexPattern)[2];
-        const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2].remove('\"');
+        const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2].replace('\"', '');
         const currentVersionName = currentRawVersionName.match(currentRawVersionName);        
 
         if (versionName.length > 0) {
