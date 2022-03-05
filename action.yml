@@ -8,6 +8,9 @@ inputs:
   versionCode:
     description: "The new version code"
     required: false
+  versionCodeLimiter:
+    description: "Limit to the last digest when adding to the version name"
+    required: false
   versionName:
     description: "The new version name"
     required: false

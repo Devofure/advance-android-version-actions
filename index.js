@@ -12,6 +12,7 @@ const versionWithoutStageRegexPattern = /\d+(\.\d+){2,}/;
 try {
     const gradlePath = core.getInput('gradlePath');
     const versionCode = core.getInput('versionCode');
+    const versionCodeLimiter = core.getInput('versionCodeLimiter');
     const versionName = core.getInput('versionName');
     const versionStage = core.getInput('versionStage');
 
@@ -33,7 +34,11 @@ try {
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${newVersionCode}`);
         }
 
-        const currentVersionCode = newGradle.match(versionCodeRegexPattern)[2];
+        currentVersionCode = newGradle.match(versionCodeRegexPattern)[2]
+        if (versionCodeLimiter > 0) {
+            const currentVersionCodeStr = currentVersionCode.toString();
+            currentVersionCode = parseInt(currentVersionCodeStr.slice(versionCodeLimiter));
+        }
 
         if (versionName.length > 0) {
             if (versionStage.length > 0) {
@@ -47,7 +52,7 @@ try {
         } else {
             if (versionStage.length > 0) {
                 const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2];
-                const currentVersionName = currentRawVersionName.match(versionWithoutStageRegexPattern)[0];        
+                const currentVersionName = currentRawVersionName.match(versionWithoutStageRegexPattern)[0];
                 const newVersion = currentVersionName + '-' + versionStage + '.' + currentVersionCode;
                 console.log(`Trying to override version name ${newVersion}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
