@@ -31,16 +31,25 @@ try {
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${newVersionCode}`);
         }
 
+        const currentVersionCode = newGradle.match(versionCodeRegexPattern)[2];
+        const currentVersionName = newGradle.match(versionNameRegexPattern)[2];
+
         if (versionName.length > 0) {
             if (versionStage.length > 0) {
-                currentVersionCode = newGradle.match(versionCodeRegexPattern)[2];
-                const newVersion = versionName + "-" + versionStage + "." + currentVersionCode
+                const newVersion = versionName + '-' + versionStage + '.' + currentVersionCode
                 console.log(`Trying to override version name ${newVersion}`)
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
             } else {
                 console.log(`Trying to override version name ${versionName}`)
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${versionName}\"`);
             }
+        } else {
+            if (versionStage.length > 0) {
+                const newVersion = currentVersionName + '-' + versionStage + '.' + currentVersionCode
+                console.log(`Trying to override version name ${newVersion}`)
+                newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
+            }
+
         }
 
         fs.writeFile(gradlePath, newGradle, function (err) {
