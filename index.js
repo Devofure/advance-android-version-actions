@@ -6,6 +6,8 @@ const fs = require('fs');
 const versionCodeRegexPattern = /(versionCode(?:\s|=)*)(.*)/;
 // versionName — A string used as the version number shown to users [...] -> https://developer.android.com/studio/publish/versioning
 const versionNameRegexPattern = /(versionName(?:\s|=)*)(.*)/;
+// A string used to match the major.minor.ptach and exclude stage version -> https://en.wikipedia.org/wiki/Software_versioning
+const currentRawVersionName = /\d+(\.\d+){2,}/;
 
 try {
     const gradlePath = core.getInput('gradlePath');
@@ -32,7 +34,8 @@ try {
         }
 
         const currentVersionCode = newGradle.match(versionCodeRegexPattern)[2];
-        const currentVersionName = newGradle.match(versionNameRegexPattern)[2];
+        const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2].remove('\"');
+        const currentVersionName = currentRawVersionName.match(currentRawVersionName);        
 
         if (versionName.length > 0) {
             if (versionStage.length > 0) {
