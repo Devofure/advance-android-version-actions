@@ -48,6 +48,9 @@ try {
             }
         } else {
             if (versionStage.length > 0) {
+                console.log(`Current version name total ${currentVersionName}`);
+                console.log(`Current version name 1 : ${currentVersionName[1]}`);
+                console.log(`Current version name 0 : ${currentVersionName[0]}`);
                 const newVersion = currentVersionName + '-' + versionStage + '.' + currentVersionCode;
                 console.log(`Trying to override version name ${newVersion}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
