@@ -34,7 +34,7 @@ try {
         }
 
         const currentVersionCode = newGradle.match(versionCodeRegexPattern)[2];
-        const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2].replace('\"', '');
+        const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2];
         const currentVersionName = currentRawVersionName.match(currentRawVersionName);        
 
         if (versionName.length > 0) {
@@ -48,9 +48,9 @@ try {
             }
         } else {
             if (versionStage.length > 0) {
-                const newVersion = currentVersionName + '-' + versionStage + '.' + currentVersionCode
+                const newVersion = currentVersionName.concat('-').concat(versionStage).concat('.').concat(currentVersionCode)
                 console.log(`Trying to override version name ${newVersion}`)
-                newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
+                newGradle = newGradle.replace(versionNameRegexPattern, `$1${newVersion}`);
             }
 
         }
