@@ -31,6 +31,7 @@ try {
         else {
             const lastVersionCodeStr = newGradle.match(versionCodeRegexPattern)[2];
             const newVersionCode = parseInt(lastVersionCodeStr) + 1;
+            console.log(`Trying to override version code ${newVersionCode}`)
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${newVersionCode}`);
         }
 
