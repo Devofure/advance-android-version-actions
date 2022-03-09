@@ -32,7 +32,7 @@ Follows Semantic versioning format https://semver.org/
 ```
 
 
-{major}.{minor}.{patch}-{stage}.{version code} = 1.5.6-alpha.2000124 or 1.5.6-alpha.2000124 
+{major}.{minor}.{patch}-{stage}.{version code} = 1.5.6-alpha.2000124 or 1.5.6-a.2000124 
 
 {major}.{minor}.{patch}-{stage}.{limited version code} = 1.5.6-alpha.124 or 1.5.6-a.124
 
