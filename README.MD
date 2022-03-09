@@ -25,8 +25,8 @@ Follows Semantic versioning format https://semver.org/
     # the only way to remove the version stage is to set the versionName without the the versionStage
     versionStage: ''
     # versionCodeLimiter
-    # ex. if the versionCodeLimiter is 3 and the android version is 20000345, the limited version code will be 345
-    # The version code added to the version name after the version stage will be limited
+    # ex. if the versionCodeLimiter is 3 and the version code is 20000345, the limited version code will be limited to 345
+    # The limited version code will be added to the version name after the version stage. 1.5.6-alpha.345, without limiter 1.5.6-alpha.20000345
     versionCodeLimiter: ''
     
 ```
