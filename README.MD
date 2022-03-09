@@ -6,7 +6,7 @@ Follows Semantic versioning format https://semver.org/
 ## Usage
 
 ```yaml
-- uses: DoubleSymmetry/android-version-actions@v1.3
+- uses: Devofure/advance-android-version-actions@v1.4
   with:
     gradlePath: app/build.gradle # or app/build.gradle.kts
 
@@ -32,9 +32,9 @@ Follows Semantic versioning format https://semver.org/
 ```
 
 
-{major}.{minor}.{patch}-{stage}.{version code} = 1.5.6-alpha.2000124
+{major}.{minor}.{patch}-{stage}.{version code} = 1.5.6-alpha.2000124 or 1.5.6-alpha.2000124 
 
-{major}.{minor}.{patch}-{stage}.{limited version code} = 1.5.6-alpha.124
+{major}.{minor}.{patch}-{stage}.{limited version code} = 1.5.6-alpha.124 or 1.5.6-a.124
 
 
 
@@ -53,7 +53,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Bump version
-        uses: Devofure/android-version-actions@v1.4
+        uses: Devofure/advance-android-version-actions@v1.4
         with:
           gradlePath: app/build.gradle # or app/build.gradle.kts 
           versionName: 1.0.0
@@ -72,7 +72,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Bump version
-        uses: Devofure/android-version-actions@v1.4
+        uses: Devofure/advance-android-version-actions@v1.4
         with:
           gradlePath: app/build.gradle # or app/build.gradle.kts 
           versionCode: ${{github.run_number}}
@@ -114,7 +114,7 @@ jobs:
           java-version: 1.8
 
       - name: Bump version to Alpha
-        uses: Devofure/android-version-actions@master
+        uses: Devofure/advance-android-version-actions@v1.4
         if: ${{ github.event.inputs.stage == 'alpha' }}
         with:
           gradlePath: app/build.gradle
@@ -123,7 +123,7 @@ jobs:
           versionCodeLimiter: 3
 
       - name: Bump version to Beta
-        uses: Devofure/android-version-actions@master
+        uses: Devofure/advance-android-version-actions@v1.4
         if: ${{ github.event.inputs.stage != 'alpha' && github.event.inputs.stage != 'release' }}
         with:
           gradlePath: app/build.gradle
@@ -132,7 +132,7 @@ jobs:
           versionCodeLimiter: 3
 
       - name: Bump version to Release
-        uses: Devofure/android-version-actions@master
+        uses: Devofure/advance-android-version-actions@v1.4
         if: ${{ github.event.inputs.stage == 'release' }}
         with:
           gradlePath: app/build.gradle
