@@ -1,4 +1,4 @@
-name: "Increment the version code/name/stage of your Android project"
+name: "Advance android version actions"
 description: "This action will increment the version code/name/stage directly in build.gradle . "
 inputs:
   gradlePath:
