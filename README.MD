@@ -1,4 +1,4 @@
-# Devofure/android-version-actions v1.4
+# Devofure/advance-android-version-actions v1.4
 Override your android app version, version code and stage through github actions
 
 Follows Semantic versioning format https://semver.org/
