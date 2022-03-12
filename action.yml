@@ -20,6 +20,12 @@ inputs:
 outputs:
   result: # id of output
     description: "Action Result"
+  lastestVersionCode:
+    description: "Version Code"
+  latestVersionName:
+    description: "Version Name"
+  latestVersionNameWithoutStage:
+    description: "Version Name without stage"
 runs:
   using: "node12"
   main: "index.js"
