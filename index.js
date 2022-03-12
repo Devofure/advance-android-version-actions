@@ -64,7 +64,7 @@ try {
         //set output
         const lastestVersionCode = newGradle.match(versionCodeRegexPattern)[2];
         const latestVersionName = newGradle.match(versionNameRegexPattern)[2];
-        const latestVersionNameWithoutStage = currentRawVersionName.match(versionWithoutStageRegexPattern)[0];
+        const latestVersionNameWithoutStage = latestVersionName.match(versionWithoutStageRegexPattern)[0];
         core.setOutput("lastestVersionCode", `${lastestVersionCode}`);
         core.setOutput("latestVersionName", `${latestVersionName}`);
         core.setOutput("latestVersionNameWithoutStage", `${latestVersionNameWithoutStage}`);
