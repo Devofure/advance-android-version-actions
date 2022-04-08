@@ -36,8 +36,8 @@ try {
         }
 
         currentVersionCode = newGradle.match(versionCodeRegexPattern)[2]
-        if (versionCodeLimiter > 0 && versionCodeLimiter >= currentVersionCode) {
-            const currentVersionCodeStr = currentVersionCode.toString();
+        const currentVersionCodeStr = currentVersionCode.toString();
+        if (versionCodeLimiter > 0 && versionCodeLimiter >= currentVersionCodeStr.length) {
             currentVersionCode = parseInt(currentVersionCodeStr.slice(versionCodeLimiter));
         }
 
