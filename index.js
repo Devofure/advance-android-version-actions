@@ -64,11 +64,14 @@ try {
         //set output
         const lastestVersionCode = newGradle.match(versionCodeRegexPattern)[2];
         const latestVersionName = newGradle.match(versionNameRegexPattern)[2];
-        const latestVersionNameWithoutStage = latestVersionName.match(versionWithoutStageRegexPattern)[0];
         core.setOutput("lastestVersionCode", `${lastestVersionCode}`);
         core.setOutput("latestVersionName", `${latestVersionName}`);
-        core.setOutput("latestVersionNameWithoutStage", `${latestVersionNameWithoutStage}`);
-
+        const latestVersionNameWithoutStageMatch = latestVersionName.match(versionWithoutStageRegexPattern);
+        if(latestVersionNameWithoutStageMatch.length > 0) {
+            const latestVersionNameWithoutStage = latestVersionNameWithoutStageMatch[0];
+            core.setOutput("latestVersionNameWithoutStage", `${latestVersionNameWithoutStage}`);
+        }
+        
         fs.writeFile(gradlePath, newGradle, function (err) {
             if (err) throw err;
             console.log(`Successfully override the file`)
