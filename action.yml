@@ -17,6 +17,9 @@ inputs:
   versionStage:
     description: "The stage of the app"
     required: false
+  versionMetaIndo:
+    description: "Added meta info to the end of the version"
+    required: false
 outputs:
   result: # id of output
     description: "Action Result"
