@@ -53,7 +53,7 @@ try {
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${versionName}\"`);
             }
         } else {
-                const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2];
+                const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2].replace(/['"]+/g, '');
                 const currentVersionName = currentRawVersionName.match(versionWithoutStageRegexPattern)[0];
 			if (versionStage && versionStage.length > 0) {
                 const newVersion = currentVersionName + '-' + versionStage + '.' + currentVersionCode + versionMetaInfo;
