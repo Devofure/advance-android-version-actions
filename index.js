@@ -15,16 +15,18 @@ try {
     const versionCodeLimiter = core.getInput('versionCodeLimiter');
     const versionName = core.getInput('versionName');
     const versionStage = core.getInput('versionStage');
+    const versionMetaInfo = core.getInput('versionMetaInfo') || '';
 
 
     console.log(`Gradle Path : ${gradlePath}`);
     console.log(`Version Code : ${versionCode}`);
     console.log(`Version Name : ${versionName}`);
     console.log(`Version stage : ${versionStage}`);
+    console.log(`Version meta info : ${versionMetaInfo}`);
 
     fs.readFile(gradlePath, 'utf8', function (err, data) {
         newGradle = data;
-        if (versionCode.length > 0) {
+        if (versionCode && versionCode.length > 0) {
             console.log(`Trying to override version code ${versionCode}`)
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${versionCode}`);
         }
@@ -37,13 +39,13 @@ try {
 
         currentVersionCode = newGradle.match(versionCodeRegexPattern)[2]
         const currentVersionCodeStr = currentVersionCode.toString();
-        if (versionCodeLimiter > 0) {
+        if (versionCodeLimiter && versionCodeLimiter > 0) {
             currentVersionCode = parseInt(currentVersionCodeStr.slice(-versionCodeLimiter));
         }
 
-        if (versionName.length > 0) {
-            if (versionStage.length > 0) {
-                const newVersion = versionName + '-' + versionStage + '.' + currentVersionCode
+        if (versionName && versionName.length > 0) {
+            if (versionStage && versionStage.length > 0) {
+                const newVersion = versionName + '-' + versionStage + '.' + currentVersionCode + versionMetaInfo
                 console.log(`Trying to override version name ${newVersion}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
             } else {
@@ -51,10 +53,10 @@ try {
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${versionName}\"`);
             }
         } else {
-            if (versionStage.length > 0) {
+            if (versionStage && versionStage.length > 0) {
                 const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2];
                 const currentVersionName = currentRawVersionName.match(versionWithoutStageRegexPattern)[0];
-                const newVersion = currentVersionName + '-' + versionStage + '.' + currentVersionCode;
+                const newVersion = currentVersionName + '-' + versionStage + '.' + currentVersionCode + versionMetaInfo;
                 console.log(`Trying to override version name ${newVersion}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
             }
