@@ -27,13 +27,13 @@ try {
     fs.readFile(gradlePath, 'utf8', function (err, data) {
         newGradle = data;
         if (versionCode && versionCode.length > 0) {
-            console.log(`Trying to override version code ${versionCode}`)
+            console.log(`Trying to set version code ${versionCode}`)
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${versionCode}`);
         }
         else {
             const lastVersionCodeStr = newGradle.match(versionCodeRegexPattern)[2];
             const newVersionCode = parseInt(lastVersionCodeStr) + 1;
-            console.log(`Trying to override version code ${newVersionCode}`)
+            console.log(`Trying to set version code ${newVersionCode}`)
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${newVersionCode}`);
         }
 
@@ -46,32 +46,40 @@ try {
         if (versionName && versionName.length > 0) {
             if (versionStage && versionStage.length > 0) {
                 const newVersion = versionName + '-' + versionStage + '.' + currentVersionCode + versionMetaInfo
-                console.log(`Trying to override version name ${newVersion}`);
+                console.log(`Trying to set version name ${newVersion}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
             } else {
-                console.log(`Trying to override version name ${versionName}`);
+                console.log(`Trying to set version name ${versionName}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${versionName}\"`);
             }
         } else {
-            if (versionStage && versionStage.length > 0) {
                 const currentRawVersionName = newGradle.match(versionNameRegexPattern)[2];
                 const currentVersionName = currentRawVersionName.match(versionWithoutStageRegexPattern)[0];
+			if (versionStage && versionStage.length > 0) {
                 const newVersion = currentVersionName + '-' + versionStage + '.' + currentVersionCode + versionMetaInfo;
-                console.log(`Trying to override version name ${newVersion}`);
+                console.log(`Trying to set version name ${newVersion}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
-            }
-
+			} else { //only add meta info
+                const newVersion = currentVersionName + versionMetaInfo;
+                console.log(`Trying to set version name ${newVersion}`);
+                newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
+			}
         }
 
         //set output
         const lastestVersionCode = newGradle.match(versionCodeRegexPattern)[2];
-        const latestVersionName = newGradle.match(versionNameRegexPattern)[2];
-        core.setOutput("lastestVersionCode", `${lastestVersionCode}`);
+        console.log(`VersionCode in Gradle: ${lastestVersionCode}`);
+		core.setOutput("lastestVersionCode", `${lastestVersionCode}`);
+
+		const latestVersionName = newGradle.match(versionNameRegexPattern)[2];
+        console.log(`VersionName in Gradle: ${latestVersionName}`);
         core.setOutput("latestVersionName", `${latestVersionName}`);
+
         const latestVersionNameWithoutStageMatch = latestVersionName.match(versionWithoutStageRegexPattern);
         if(latestVersionNameWithoutStageMatch.length > 0) {
             const latestVersionNameWithoutStage = latestVersionNameWithoutStageMatch[0];
             core.setOutput("latestVersionNameWithoutStage", `${latestVersionNameWithoutStage}`);
+			console.log(`latestVersionNameWithoutStage in Gradle: ${latestVersionName}`);
         }
         
         fs.writeFile(gradlePath, newGradle, function (err) {
