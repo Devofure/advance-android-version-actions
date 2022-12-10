@@ -60,7 +60,7 @@ try {
                 console.log(`Trying to set version name ${newVersion}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
 			} else { //only add meta info
-                const newVersion = currentVersionName + versionMetaInfo;
+                const newVersion = currentRawVersionName + versionMetaInfo;
                 console.log(`Trying to set version name ${newVersion}`);
                 newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${newVersion}\"`);
 			}
