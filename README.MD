@@ -19,6 +19,19 @@ npm test
 Commit the generated `dist/` files when updating the source or dependencies.
 GitHub Actions executes `dist/index.js` without installing npm packages.
 
+## Outputs
+
+| Name | Description |
+| --- | --- |
+| `result` | `Done` after the Gradle file is successfully updated. |
+| `latestVersionCode` | The updated version code. |
+| `lastestVersionCode` | Deprecated spelling of `latestVersionCode`, kept as an alias for existing workflows. |
+| `latestVersionName` | The updated version name, including quotes. |
+| `latestVersionNameWithoutStage` | The numeric version name without the stage or metadata. |
+
+Use `steps.<step-id>.outputs.latestVersionCode` in new workflows. Both version-code
+outputs contain the same value.
+
 ## Usage
 
 ```yaml

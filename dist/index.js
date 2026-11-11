@@ -31625,9 +31625,11 @@ try {
         }
 
         //set output
-        const lastestVersionCode = newGradle.match(versionCodeRegexPattern)[2];
-        console.log(`VersionCode in Gradle: ${lastestVersionCode}`);
-		setOutput("lastestVersionCode", `${lastestVersionCode}`);
+        const latestVersionCode = newGradle.match(versionCodeRegexPattern)[2];
+        console.log(`VersionCode in Gradle: ${latestVersionCode}`);
+        setOutput("latestVersionCode", `${latestVersionCode}`);
+        // Keep the original spelling for workflows that already use it.
+        setOutput("lastestVersionCode", `${latestVersionCode}`);
 
 		const latestVersionName = newGradle.match(versionNameRegexPattern)[2];
         console.log(`VersionName in Gradle: ${latestVersionName}`);

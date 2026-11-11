@@ -23,8 +23,10 @@ inputs:
 outputs:
   result: # id of output
     description: "Action Result"
-  lastestVersionCode:
+  latestVersionCode:
     description: "Version Code"
+  lastestVersionCode:
+    description: "Deprecated alias for latestVersionCode; kept for backwards compatibility"
   latestVersionName:
     description: "Version Name"
   latestVersionNameWithoutStage:
