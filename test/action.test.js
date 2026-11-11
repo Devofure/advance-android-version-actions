@@ -106,6 +106,7 @@ for (const target of ['source', 'bundle']) {
       const { result, outputPath, gradlePath } = run(t, fixture);
       assert.equal(result.status, 0, result.stdout + result.stderr);
       assert.deepEqual(readOutputs(outputPath), {
+        latestVersionCode: fixture.code,
         lastestVersionCode: fixture.code,
         latestVersionName: `"${fixture.version}"`,
         latestVersionNameWithoutStage: fixture.version.split(/[-+]/)[0],
