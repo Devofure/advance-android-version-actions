@@ -30,8 +30,8 @@ outputs:
   latestVersionNameWithoutStage:
     description: "Version Name without stage"
 runs:
-  using: "node16"
-  main: "index.js"
+  using: "node24"
+  main: "dist/index.js"
 branding:
   color: 'blue'
   icon: 'anchor'
