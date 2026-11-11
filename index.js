@@ -1,6 +1,5 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const fs = require('fs');
+import * as core from '@actions/core';
+import * as fs from 'node:fs';
 
 // versionCode — A positive integer [...] -> https://developer.android.com/studio/publish/versioning
 const versionCodeRegexPattern = /(versionCode(?:\s|=)*)(.*)/;
@@ -25,7 +24,11 @@ try {
     console.log(`Version meta info : ${versionMetaInfo}`);
 
     fs.readFile(gradlePath, 'utf8', function (err, data) {
-        newGradle = data;
+        if (err) {
+            core.setFailed(err.message);
+            return;
+        }
+        let newGradle = data;
         if (versionCode && versionCode.length > 0) {
             console.log(`Trying to set version code ${versionCode}`)
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${versionCode}`);
@@ -37,7 +40,7 @@ try {
             newGradle = newGradle.replace(versionCodeRegexPattern, `$1${newVersionCode}`);
         }
 
-        currentVersionCode = newGradle.match(versionCodeRegexPattern)[2]
+        let currentVersionCode = newGradle.match(versionCodeRegexPattern)[2]
         const currentVersionCodeStr = currentVersionCode.toString();
         if (versionCodeLimiter && versionCodeLimiter > 0) {
             currentVersionCode = parseInt(currentVersionCodeStr.slice(-versionCodeLimiter));
@@ -83,7 +86,10 @@ try {
         }
         
         fs.writeFile(gradlePath, newGradle, function (err) {
-            if (err) throw err;
+            if (err) {
+                core.setFailed(err.message);
+                return;
+            }
             console.log(`Successfully override the file`)
             core.setOutput("result", `Done`);
         });

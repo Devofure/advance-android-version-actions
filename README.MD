@@ -3,6 +3,22 @@ Override your android app version, version code and stage through github actions
 
 Follows Semantic versioning format https://semver.org/
 
+The action runs on Node.js 24. Self-hosted runners must support the `node24`
+GitHub Actions runtime.
+
+## Development
+
+Use Node.js 24 or newer:
+
+```sh
+npm ci
+npm run build
+npm test
+```
+
+Commit the generated `dist/` files when updating the source or dependencies.
+GitHub Actions executes `dist/index.js` without installing npm packages.
+
 ## Usage
 
 ```yaml
